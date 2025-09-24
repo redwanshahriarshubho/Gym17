@@ -92,6 +92,33 @@
             background-color: #0f1419;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e53e3e' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #1a202c;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body class="bg-gym-darker text-white font-sans">
@@ -125,14 +152,76 @@
                 </div>
             </div>
             <a href="contact.html" class="hover:text-gym-red transition-colors duration-300 font-medium">Contact</a>
-            <a href="#" class="bg-gym-red px-4 py-2 rounded skew-18 hover:bg-white hover:text-gym-dark transition-all duration-300 font-bold btn-gym">
-                <span class="skew--18 inline-block">Get Quote</span>
+            <a href="#" class="bg-gym-red px-4 py-2 rounded skew-18 hover:bg-white hover:text-gym-dark transition-all duration-300 font-bold btn-gym" onclick="showModal('login')">
+                <span class="skew--18 inline-block">Login/Sign Up</span>
             </a>
         </nav>
         <div class="md:hidden">
             <i class="fas fa-bars text-2xl hover:text-gym-red transition-colors duration-300 cursor-pointer"></i>
         </div>
     </header>
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('login')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4 gradient-text">Login</h2>
+            <div class="space-y-4">
+                <input type="email" placeholder="Email" class="w-full p-3 rounded bg-gym-darker text-white border border-gray-600">
+                <input type="password" placeholder="Password" class="w-full p-3 rounded bg-gym-darker text-white border border-gray-600">
+                <button class="w-full bg-gym-red p-3 rounded hover:bg-white hover:text-gym-dark transition-all duration-300 font-bold btn-gym">Login</button>
+                <p class="text-center text-gray-300">Don't have an account? <a href="#" class="text-gym-red hover:underline" onclick="showModal('signup'); closeModal('login')">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- Sign Up Modal -->
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('signup')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4 gradient-text">Sign Up</h2>
+            <div class="space-y-4">
+                <input type="text" placeholder="Full Name" class="w-full p-3 rounded bg-gym-darker text-white border border-gray-600">
+                <input type="email" placeholder="Email" class="w-full p-3 rounded bg-gym-darker text-white border border-gray-600">
+                <input type="password" placeholder="Password" class="w-full p-3 rounded bg-gym-darker text-white border border-gray-600">
+                <select class="w-full p-3 rounded bg-gym-darker text-white border border-gray-600">
+                    <option value="customer">Customer</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <button class="w-full bg-gym-red p-3 rounded hover:bg-white hover:text-gym-dark transition-all duration-300 font-bold btn-gym">Sign Up</button>
+                <p class="text-center text-gray-300">Already have an account? <a href="#" class="text-gym-red hover:underline" onclick="showModal('login'); closeModal('signup')">Login</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- Customer Account Modal -->
+    <div id="customer-account-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('customer-account')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4 gradient-text">Customer Account Details</h2>
+            <div class="space-y-4">
+                <p><strong>Name:</strong> [Your Name]</p>
+                <p><strong>Email:</strong> [Your Email]</p>
+                <p><strong>Membership Plan:</strong> Basic (৳5000/month)</p>
+                <p><strong>Join Date:</strong> [Join Date]</p>
+                <p><strong>Last Payment:</strong> ৳5000 on [Date]</p>
+                <button class="w-full bg-gym-red p-3 rounded hover:bg-white hover:text-gym-dark transition-all duration-300 font-bold btn-gym">Update Plan</button>
+                <button class="w-full bg-gray-600 p-3 rounded hover:bg-gray-500 transition-all duration-300 font-bold">Logout</button>
+            </div>
+        </div>
+    </div>
+    <!-- Admin Account Modal -->
+    <div id="admin-account-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('admin-account')">&times;</span>
+            <h2 class="text-2xl font-bold mb-4 gradient-text">Admin Account Details</h2>
+            <div class="space-y-4">
+                <p><strong>Name:</strong> [Admin Name]</p>
+                <p><strong>Email:</strong> [Admin Email]</p>
+                <p><strong>Role:</strong> Administrator</p>
+                <p><strong>Access Level:</strong> Full Control</p>
+                <button class="w-full bg-gym-red p-3 rounded hover:bg-white hover:text-gym-dark transition-all duration-300 font-bold btn-gym">Manage Users</button>
+                <button class="w-full bg-gray-600 p-3 rounded hover:bg-gray-500 transition-all duration-300 font-bold">Logout</button>
+            </div>
+        </div>
+    </div>
     <!-- Hero Carousel -->
     <section class="header-carousel relative overflow-hidden">
         <div class="absolute inset-0 hero-overlay"></div>
@@ -151,7 +240,7 @@
                         </button>
                     </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Hero Image 1" class="absolute inset-0 w-full h-full object-cover">
+                <img src="[Your Image URL]" alt="Hero Image 1" class="absolute inset-0 w-full h-full object-cover">
             </div>
             <!-- Slide 2 -->
             <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-1000">
@@ -167,7 +256,7 @@
                         </button>
                     </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Hero Image 2" class="absolute inset-0 w-full h-full object-cover">
+                <img src="[Your Image URL]" alt="Hero Image 2" class="absolute inset-0 w-full h-full object-cover">
             </div>
             <!-- Navigation -->
             <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gym-red bg-opacity-80 text-white p-3 rounded-full z-10 hover:bg-opacity-100 transition-all duration-300">
@@ -215,7 +304,7 @@
             </div>
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="About Us" class="w-full rounded-xl shadow-2xl">
+                    <img src="[Your Image URL]" alt="About Us" class="w-full rounded-xl shadow-2xl">
                 </div>
                 <div class="md:w-1/2 md:pl-12">
                     <h3 class="text-3xl font-bold mb-6">Your Journey to Fitness Starts Here</h3>
@@ -247,14 +336,14 @@
             </div>
             <div class="grid md:grid-cols-2 gap-8 mb-12">
                 <div class="relative rounded-xl overflow-hidden shadow-xl hover-lift">
-                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Free Fitness Training" class="w-full h-80 object-cover">
+                    <img src="[Your Image URL]" alt="Free Fitness Training" class="w-full h-80 object-cover">
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gym-dark to-transparent p-6">
                         <h3 class="text-2xl font-bold mb-2">Free Fitness Training</h3>
                         <p class="text-gray-300">We offer free introductory training sessions to help you get started on your fitness journey.</p>
                     </div>
                 </div>
                 <div class="relative rounded-xl overflow-hidden shadow-xl hover-lift">
-                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Cardio and Strength" class="w-full h-80 object-cover">
+                    <img src="[Your Image URL]" alt="Cardio and Strength" class="w-full h-80 object-cover">
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gym-dark to-transparent p-6">
                         <h3 class="text-2xl font-bold mb-2">Cardio and Strength</h3>
                         <p class="text-gray-300">From calorie-burning cardio to strength-building workouts, we combine the best of both worlds to maximize your results.</p>
@@ -320,10 +409,10 @@
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-gym-dark rounded-xl overflow-hidden blog-card">
-                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Full Body Home Workout" class="w-full h-56 object-cover">
+                    <img src="[Your Image URL]" alt="Full Body Home Workout" class="w-full h-56 object-cover">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img src="img/redwan17s.jpg" alt="Author" class="w-10 h-10 rounded-full mr-3">
+                            <img src="[Your Image URL]" alt="Author" class="w-10 h-10 rounded-full mr-3">
                             <div>
                                 <span class="font-medium">Redwan</span>
                                 <p class="text-sm text-gray-400">12 Sep 2025</p>
@@ -337,10 +426,10 @@
                     </div>
                 </div>
                 <div class="bg-gym-dark rounded-xl overflow-hidden blog-card">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="31-Day Fitness Calendar" class="w-full h-56 object-cover">
+                    <img src="[Your Image URL]" alt="31-Day Fitness Calendar" class="w-full h-56 object-cover">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img src="img/redwan17s.jpg" alt="Author" class="w-10 h-10 rounded-full mr-3">
+                            <img src="[Your Image URL]" alt="Author" class="w-10 h-10 rounded-full mr-3">
                             <div>
                                 <span class="font-medium">Redwan</span>
                                 <p class="text-sm text-gray-400">12 Sep 2025</p>
@@ -354,10 +443,10 @@
                     </div>
                 </div>
                 <div class="bg-gym-dark rounded-xl overflow-hidden blog-card">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="At Home Ab Workout" class="w-full h-56 object-cover">
+                    <img src="[Your Image URL]" alt="At Home Ab Workout" class="w-full h-56 object-cover">
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <img src="img/redwan17s.jpg"  alt="Author" class="w-10 h-10 rounded-full mr-3">
+                            <img src="[Your Image URL]" alt="Author" class="w-10 h-10 rounded-full mr-3">
                             <div>
                                 <span class="font-medium">Redwan</span>
                                 <p class="text-sm text-gray-400">12 Sep 2025</p>
@@ -381,7 +470,7 @@
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto">Take a virtual tour of our state-of-the-art facilities</p>
             </div>
             <div class="relative mx-auto max-w-4xl rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Video" class="w-full">
+                <img src="[Your Image URL]" alt="Video" class="w-full">
                 <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
                     <button class="bg-gym-red w-20 h-20 rounded-full flex items-center justify-center hover:bg-white hover:text-gym-red transition-all duration-300 animate-bounce-slow">
                         <i class="fas fa-play text-2xl ml-1"></i>
@@ -401,10 +490,10 @@
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="trainer-card bg-gym-dark rounded-xl overflow-hidden text-center hover-lift">
                     <div class="overflow-hidden h-64">
-                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Trainer 1" class="w-full h-full object-cover trainer-img">
+                        <img src="[Your Image URL]" alt="Trainer 1" class="w-full h-full object-cover trainer-img">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-1">Alex Johnson</h3>
+                        <h3 class="text-xl font-bold mb-1">Redwan</h3>
                         <p class="text-gym-red mb-4">Strength Coach</p>
                         <div class="flex justify-center space-x-3">
                             <a href="#" class="w-10 h-10 rounded-full bg-gym-darker flex items-center justify-center hover:bg-gym-red transition-colors duration-300">
@@ -421,7 +510,7 @@
                 </div>
                 <div class="trainer-card bg-gym-dark rounded-xl overflow-hidden text-center hover-lift">
                     <div class="overflow-hidden h-64">
-                        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Trainer 2" class="w-full h-full object-cover trainer-img">
+                        <img src="[Your Image URL]" alt="Trainer 2" class="w-full h-full object-cover trainer-img">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-1">SSS</h3>
@@ -441,7 +530,7 @@
                 </div>
                 <div class="trainer-card bg-gym-dark rounded-xl overflow-hidden text-center hover-lift">
                     <div class="overflow-hidden h-64">
-                        <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Trainer 3" class="w-full h-full object-cover trainer-img">
+                        <img src="[Your Image URL]" alt="Trainer 3" class="w-full h-full object-cover trainer-img">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-1">MMM</h3>
@@ -461,7 +550,7 @@
                 </div>
                 <div class="trainer-card bg-gym-dark rounded-xl overflow-hidden text-center hover-lift">
                     <div class="overflow-hidden h-64">
-                        <img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Trainer 4" class="w-full h-full object-cover trainer-img">
+                        <img src="[Your Image URL]" alt="Trainer 4" class="w-full h-full object-cover trainer-img">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-1">EEE</h3>
@@ -493,10 +582,10 @@
                 <!-- Testimonial 1 -->
                 <div class="bg-gym-dark p-8 rounded-xl text-center opacity-100 transition-opacity duration-1000">
                     <div class="flex justify-center mb-6">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Client" class="w-20 h-20 rounded-full object-cover">
+                        <img src="[Your Image URL]" alt="Client" class="w-20 h-20 rounded-full object-cover">
                     </div>
                     <p class="text-lg mb-6 italic text-gray-300">"This gym completely changed my lifestyle. The trainers are amazing and very supportive. I've achieved results I never thought possible in just 6 months!"</p>
-                    <h3 class="text-xl font-bold">Jessica Thompson</h3>
+                    <h3 class="text-xl font-bold">DDD</h3>
                     <p class="text-gym-red">Entrepreneur</p>
                     <div class="flex justify-center mt-4">
                         <i class="fas fa-star text-yellow-400"></i>
@@ -509,7 +598,7 @@
                 <!-- Testimonial 2 -->
                 <div class="bg-gym-dark p-8 rounded-xl text-center opacity-0 transition-opacity duration-1000 absolute inset-0">
                     <div class="flex justify-center mb-6">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Client" class="w-20 h-20 rounded-full object-cover">
+                        <img src="[Your Image URL]" alt="Client" class="w-20 h-20 rounded-full object-cover">
                     </div>
                     <p class="text-lg mb-6 italic text-gray-300">"Best fitness center in town! The equipment is top-notch and the atmosphere is incredibly motivating. I've lost 30 pounds and gained so much confidence."</p>
                     <h3 class="text-xl font-bold">David Wilson</h3>
@@ -525,7 +614,7 @@
                 <!-- Testimonial 3 -->
                 <div class="bg-gym-dark p-8 rounded-xl text-center opacity-0 transition-opacity duration-1000 absolute inset-0">
                     <div class="flex justify-center mb-6">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Client" class="w-20 h-20 rounded-full object-cover">
+                        <img src="[Your Image URL]" alt="Client" class="w-20 h-20 rounded-full object-cover">
                     </div>
                     <p class="text-lg mb-6 italic text-gray-300">"The personalized training program at Gym 17 helped me recover from my injury and get back in shape better than ever. The trainers truly care about your progress."</p>
                     <h3 class="text-xl font-bold">GGG</h3>
@@ -615,12 +704,12 @@
                 <div>
                     <h3 class="text-xl font-bold mb-4">Gallery</h3>
                     <div class="grid grid-cols-3 gap-2">
-                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Work 1" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Work 2" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Work 3" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Work 4" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Work 5" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Work 6" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
+                        <img src="[Your Image URL]" alt="Work 1" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
+                        <img src="[Your Image URL]" alt="Work 2" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
+                        <img src="[Your Image URL]" alt="Work 3" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
+                        <img src="[Your Image URL]" alt="Work 4" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
+                        <img src="[Your Image URL]" alt="Work 5" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
+                        <img src="[Your Image URL]" alt="Work 6" class="w-full h-20 object-cover rounded hover:opacity-80 transition-opacity duration-300 cursor-pointer">
                     </div>
                 </div>
             </div>
@@ -636,74 +725,6 @@
             <i class="fas fa-chevron-up skew--18"></i>
         </a>
     </div>
-    <script>
-        // Spinner
-        setTimeout(() => {
-            document.getElementById('spinner').classList.remove('flex');
-            document.getElementById('spinner').style.display = 'none';
-        }, 1500);
-        // Hero Carousel
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('#carousel > div');
-        function showSlide(n) {
-            slides.forEach(slide => slide.classList.remove('opacity-100'));
-            slides.forEach(slide => slide.classList.add('opacity-0'));
-            slides[n].classList.add('opacity-100');
-            slides[n].classList.remove('opacity-0');
-            currentSlide = (n + slides.length) % slides.length;
-            
-            // Update indicators
-            const indicators = document.querySelectorAll('#carousel .absolute.bottom-8 button');
-            indicators.forEach((indicator, index) => {
-                if (index === currentSlide) {
-                    indicator.classList.add('bg-white');
-                    indicator.classList.remove('bg-opacity-50');
-                } else {
-                    indicator.classList.remove('bg-white');
-                    indicator.classList.add('bg-opacity-50');
-                }
-            });
-        }
-        function nextSlide() { showSlide(currentSlide + 1); }
-        function prevSlide() { showSlide(currentSlide - 1); }
-        setInterval(nextSlide, 5000);
-        // Testimonial Carousel
-        let currentTestimonial = 0;
-        const testimonials = document.querySelectorAll('#testimonial > div');
-        function showTestimonial(n) {
-            testimonials.forEach(t => t.classList.remove('opacity-100'));
-            testimonials.forEach(t => t.classList.add('opacity-0'));
-            testimonials[n].classList.add('opacity-100');
-            testimonials[n].classList.remove('opacity-0');
-            currentTestimonial = (n + testimonials.length) % testimonials.length;
-            
-            // Update indicators
-            const indicators = document.querySelectorAll('#testimonial .flex.justify-center.mt-8 button');
-            indicators.forEach((indicator, index) => {
-                if (index === currentTestimonial) {
-                    indicator.classList.add('bg-gym-red');
-                    indicator.classList.remove('bg-white', 'bg-opacity-50');
-                } else {
-                    indicator.classList.remove('bg-gym-red');
-                    indicator.classList.add('bg-white', 'bg-opacity-50');
-                }
-            });
-        }
-        function nextTestimonial() { showTestimonial(currentTestimonial + 1); }
-        function prevTestimonial() { showTestimonial(currentTestimonial - 1); }
-        setInterval(nextTestimonial, 7000);
-        // Back to Top
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                document.querySelector('.back-to-top').classList.remove('hidden');
-            } else {
-                document.querySelector('.back-to-top').classList.add('hidden');
-            }
-        });
-        document.querySelector('.back-to-top a').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
